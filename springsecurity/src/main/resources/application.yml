@@ -1,10 +1,25 @@
+# Configuration de la source de données
 spring:
   datasource:
+    # URL de la base de données
     url: jdbc:postgresql://localhost:5432/spring_boot_jwt_bd
+    # Nom d'utilisateur
     username: postgres
+    # Mot de passe
     password: postgres
+    # Nom de la classe du driver JDBC
     driver-class-name: org.postgresql.Driver
+
+  # Configuration JPA
   jpa:
+    # Configuration Hibernate
     hibernate:
+      # Mise à jour automatique du schéma
       ddl-auto: update
-    show-sql: true
+      # Affichage des requêtes SQL
+      show-sql: true
+
+# Configuration du serveur
+server:
+  # Port d'écoute
+  port: 0
