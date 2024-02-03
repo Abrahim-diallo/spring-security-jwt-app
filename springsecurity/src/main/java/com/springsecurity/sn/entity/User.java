@@ -3,6 +3,9 @@ package com.springsecurity.sn.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -11,6 +14,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@AllArgsConstructor
+@Getter
+@Setter
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +25,7 @@ public class User implements Serializable {
     @Column(length = 45, nullable = false, unique = true)
     @NotBlank(message = "First Name is required")
     @Length(min = 2, max = 45, message = "First Name must be between 2 and 45 characters")
-    private String FirstName;
+    private String firstName;
 
 
     @Column(length = 45, nullable = false)
@@ -57,15 +63,14 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer id, String firstName, String lastName, String email, String password, boolean isActive, boolean isNonlocked, Role roles) {
-        this.id = id;
-        FirstName = firstName;
+    public User(String firstName, String lastName, String email, String password, boolean isActive, boolean isNonlocked, Set<Role> roles) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.isActive = isActive;
         this.isNonlocked = isNonlocked;
-        this.roles.add(roles);
+        this.roles.addAll(roles);
     }
 
     public Integer getId() {
@@ -76,20 +81,20 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return FirstName;
-    }
-
-    public void setFirstName(String firstName) {
-        FirstName = firstName;
     }
 
     public String getEmail() {
@@ -136,7 +141,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", FirstName='" + FirstName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
